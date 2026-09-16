@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KPI: A Promptable Kernel for Physical Interaction on Humanoids</title>
+<meta name="description" content="Project page for KPI, a promptable kernel for physical interaction on humanoid robots.">
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1c1e;
+    --muted: #5c6470;
+    --rule: #e3e6ea;
+    --card: #f6f7f9;
+    --accent: #1e5bb8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a;
+      --fg: #e8eaed;
+      --muted: #a0a8b4;
+      --rule: #2a2e35;
+      --card: #1c1f25;
+      --accent: #7aa6ea;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 56px 16px 96px; }
+  header { text-align: center; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); line-height: 1.25; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .authors { color: var(--muted); font-size: 0.98rem; margin: 0 0 6px; }
+  .venue { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+  .links a {
+    display: inline-block; padding: 8px 16px; border: 1px solid var(--rule);
+    border-radius: 999px; color: var(--fg); text-decoration: none; font-size: 0.92rem;
+    background: var(--card);
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+  h2 { font-size: 1.15rem; margin: 44px 0 12px; letter-spacing: -0.005em; }
+  p { margin: 0 0 16px; }
+  figure { margin: 32px 0 0; }
+  figure img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); display: block; }
+  figcaption { color: var(--muted); font-size: 0.88rem; margin-top: 10px; }
+  .abstract { font-size: 1.0rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
+  .item h3 { font-size: 0.98rem; margin: 0 0 8px; }
+  .item p { color: var(--muted); font-size: 0.9rem; margin: 8px 0 0; }
+  video { width: 100%; border-radius: 8px; border: 1px solid var(--rule); background: #000; display: block; }
+  .slot {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    aspect-ratio: 16 / 10; background: var(--card); border: 1px dashed var(--rule);
+    border-radius: 8px; color: var(--muted); font-size: 0.85rem; padding: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>KPI: A Promptable Kernel for Physical Interaction on Humanoids</h1>
+    <p class="authors">Anonymous Authors</p>
+    <p class="venue">Under review. This page is anonymous.</p>
+    <nav class="links">
+      <a href="#abstract">Abstract</a>
+      <a href="#videos">Videos</a>
+    </nav>
+  </header>
+
+  <figure>
+    <img src="teaser.png" alt="KPI overview: a humanoid turns a hand-winch to hoist a second robot, with additional demonstrations of door opening, box carrying and board writing.">
+    <figcaption>
+      <strong>KPI:</strong> a promptable kernel for physical interaction. KPI uses motion references,
+      interaction contracts, and estimated contact feedback to adapt the arm controller, while an
+      unmodified whole-body tracker controls the legs and waist. From one instruction, a humanoid turns
+      a hand-winch to hoist a second robot. Further agentic demonstrations include door opening, box
+      carrying, and board writing.
+    </figcaption>
+  </figure>
+
+  <h2 id="abstract">Abstract</h2>
+  <p class="abstract">
+    Humanoids now walk, balance and reach with remarkable generality: one whole-body tracking policy
+    follows references from a human, or from an end-to-end policy. That generality travels in the
+    trajectory, and a trajectory alone carries limited information about the interaction it should
+    produce: at contact, the executing controller determines how the robot behaves. Single-task policies
+    usually reach hard interactions by optimising trajectory and controller together in simulation;
+    general stacks usually assume a preset or hand-chosen controller. We present KPI, a promptable
+    kernel for physical interaction between the trajectory source and an unmodified whole-body tracker.
+    Instead of a controller fixed before the task, the trajectory source sends a contract: per direction,
+    track, comply, or hold a force range in newtons. From tracking error and a wrench estimate, the
+    kernel adapts the arms' stiffness, damping, reference and feedforward toward it at contact rate.
+    We demonstrate KPI through an agentic framework: from one instruction, a vision-language agent
+    writes both the reference trajectory and the contract, with no task-specific code. We demonstrate
+    instruction-driven winch operation, door opening, box transport, and surface interaction. In the
+    winch demonstration, the humanoid is able to turn a crank to hoist a second robot fully off the
+    ground.
+  </p>
+
+  <h2 id="videos">Agentic execution</h2>
+  <p>
+    Each run starts from a single instruction, with no task-specific code and no hand-written contract.
+  </p>
+  <div class="grid">
+
+    <div class="item">
+      <h3>Winch operation</h3>
+      <!-- Replace the slot below with:
+           <video controls playsinline preload="metadata" poster="videos/winch.jpg"><source src="videos/winch.mp4" type="video/mp4"></video> -->
+      <div class="slot">videos/winch.mp4</div>
+      <p>The robot turns the crank until a second humanoid is lifted off the ground.</p>
+    </div>
+
+    <div class="item">
+      <h3>Door opening and passage</h3>
+      <div class="slot">videos/door.mp4</div>
+      <p>Grasp the handle, unlatch, step back, swing the door open and walk through.</p>
+    </div>
+
+    <div class="item">
+      <h3>Box transport</h3>
+      <div class="slot">videos/box.mp4</div>
+      <p>Bimanual pick-up, turn, squat and place, holding the grasp as the body moves.</p>
+    </div>
+
+    <div class="item">
+      <h3>Board writing</h3>
+      <div class="slot">videos/writing.mp4</div>
+      <p>Sustained contact force between the pen and the board during tangential motion.</p>
+    </div>
+
+  </div>
+
+  <h2>Teleoperation through the same interface</h2>
+  <div class="grid">
+
+    <div class="item">
+      <h3>Drawer opening</h3>
+      <div class="slot">videos/drawer.mp4</div>
+      <p>A translational motion constraint.</p>
+    </div>
+
+    <div class="item">
+      <h3>Carrying while kneeling, standing and running</h3>
+      <div class="slot">videos/carry.mp4</div>
+      <p>Bimanual support maintained through posture changes and locomotion.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    Project page for an anonymous submission. No author or institutional information is provided here.
+  </footer>
+
+</div>
+</body>
+</html>
